@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/app_main.cpp
+cmath
+-
+list
+-
+deque
+-
+iostream
+-
+string
+-
+string.h
+-
+conversions.hpp
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/conversions.hpp
+
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/conversions.hpp
+cmath
+-
+list
+-
+deque
+-
+iostream
+-
+string
+-
+string.h
+-
+

@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/richardalbertleddy/Documents/GitHub/ML/STM-LTM/include/yyjson.h
+stdlib.h
+-
+stddef.h
+-
+limits.h
+-
+string.h
+-
+float.h
+-
+stdint.h
+-
+stdbool.h
+-
+
+/Users/richardalbertleddy/Documents/GitHub/ML/STM-LTM/yyjson.c
+include/yyjson.h
+/Users/richardalbertleddy/Documents/GitHub/ML/STM-LTM/include/yyjson.h
+stdio.h
+-
+math.h
+-
+intrin.h
+-
+sys/types.h
+-
+endian.h
+-
+machine/endian.h
+-
+sys/endian.h
+-
+
