@@ -15,24 +15,24 @@ But, it is basically the same as the one in the Bitcoin repository.
 
 ## List of calls
 
-* Binary
+* **Binary**
 ```
 inline void convert_to_binary_str(const unsigned char *input,size_t in_len,unsigned char *output)
 inline void convert_from_binary_str(const unsigned char *input,size_t in_len,unsigned char *output)
 ```
-* Octal
+* **Octal**
 ```
 inline void convert_to_octal_str(const unsigned char *input,size_t in_len,unsigned char *output)
 inline void convert_from_octal_str(const unsigned char *input,size_t in_len,unsigned char *output)
 ```
 
-* Hex
+* **Hex**
 ```
 inline void convert_to_hex_str(const unsigned char *input,size_t in_len,unsigned char *output,bool lower = true)
 inline void convert_from_hex_str(const unsigned char *input,size_t in_len,unsigned char *output,bool lower = true)
 ```
 
-* base 58 - bitcoin
+* **base 58 - bitcoin**
 ```
 inline void convert_to_58_str(const unsigned char *input,size_t in_len,unsigned char *output)
 inline bool convert_from_58_str(const unsigned char *input,size_t in_len,unsigned char *output,size_t out_size)
@@ -41,7 +41,7 @@ inline bool convert_from_58_str(const unsigned char *input,size_t in_len,unsigne
 > For actualy binary buffers, use *b58tobin* .
 
 
-* base 64 - bitcoin
+* **base 64 - bitcoin**
 ```
 inline void convert_to_64_str(const unsigned char *input,size_t in_len,unsigned char *output,bool url_safe = false)
 inline void convert_from_64_str(const unsigned char *input,size_t in_len,unsigned char *output)
