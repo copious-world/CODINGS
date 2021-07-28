@@ -19,10 +19,10 @@ string
 -
 string.h
 -
-conversions.hpp
-/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/conversions.hpp
+src/conversions.hpp
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/conversions.hpp
 
-/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/conversions.hpp
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/conversions.hpp
 cmath
 -
 list

@@ -155,7 +155,7 @@ inline void convert_from_hex_str(const unsigned char *input,size_t in_len,unsign
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 // 58 - bitcoin
 // 58 STRING REPRESENTATION
-
+// This code is derived from the bitcoin C++ implementation: https://github.com/bitcoin/libbase58/blob/master/base58.c
 
 static const int8_t b58digits_map[] = {
 	-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,
