@@ -9,6 +9,62 @@
 #include <string.h>
 
 
+/*
+https://github.com/multiformats
+
+identity    0x00 	8-bit binary (encoder and decoder keeps data unmodified) 	default
+base2           0 	binary (01010101) 	candidate
+base8 	        7 	octal 	draft
+base10 	        9 	decimal 	draft
+base16          f 	hexadecimal 	default
+base16upper 	F 	hexadecimal 	default
+base32hex       v 	rfc4648 case-insensitive - no padding - highest char 	candidate
+base32hexupper  V 	rfc4648 case-insensitive - no padding - highest char 	candidate
+base32hexpad 	    t 	rfc4648 case-insensitive - with padding 	candidate
+base32hexpadupper 	T 	rfc4648 case-insensitive - with padding 	candidate
+base32 	        b 	rfc4648 case-insensitive - no padding 	default
+base32upper 	B 	rfc4648 case-insensitive - no padding 	default
+base32pad 	    c 	rfc4648 case-insensitive - with padding 	candidate
+base32padupper 	C 	rfc4648 case-insensitive - with padding 	candidate
+base32z 	    h 	z-base-32 (used by Tahoe-LAFS) 	draft
+base36 	        k 	base36 [0-9a-z] case-insensitive - no padding 	draft
+base36upper 	K 	base36 [0-9a-z] case-insensitive - no padding 	draft
+base58btc 	    z 	base58 bitcoin 	default
+base58flickr 	Z 	base58 flicker 	candidate
+base64 	        m 	rfc4648 no padding 	default
+base64pad   	M 	rfc4648 with padding - MIME encoding 	candidate
+base64url 	    u 	rfc4648 no padding 	default
+base64urlpad 	U 	rfc4648 with padding 	default
+proquint 	    p 	PRO-QUINT https://arxiv.org/html/0901.4016 	draft
+*/
+
+const char * g_enc_prefix = "079fFvVtTbBcChkKzZmMuUp";
+typedef enum {
+    base2,
+    base8,
+    base10,
+    base16,
+    base16upper,
+    base32hex,
+    base32hexupper,
+    base32hexpad,
+    base32hexpadupper,
+    base32z,
+    base36,
+    base36upper,
+    base58btc,
+    base58flickr,
+    base64,
+    base64pad,
+    base64url,
+    base64urlpad,
+    proquint
+}  base_encoding_symbol;
+
+inline const char enc_predix(base_encoding_symbol bes) {
+    return g_enc_prefix[(uint8_t)bes];
+}
+
 // BINARY 
 // BINARY STRING REPRESENTATION
 
@@ -66,11 +122,11 @@ inline void convert_to_octal_str(const unsigned char *input,size_t in_len,unsign
         unsigned char c = *tmp++;
         tmp_buff = c;
         //
-        if ( *tmp ) c = *tmp++; else c = 0;
+        if ( tmp < end ) c = *tmp++; else c = 0;
         tmp_buff = tmp_buff << 8;
         tmp_buff |= ((0x000000FF) & c);
         //
-        if ( *tmp ) c = *tmp++; else c = 0;
+        if ( tmp < end ) c = *tmp++; else c = 0;
         tmp_buff = tmp_buff << 8;
         tmp_buff |= ((0x000000FF) & c);
         //
@@ -150,6 +206,169 @@ inline void convert_from_hex_str(const unsigned char *input,size_t in_len,unsign
     }
     *o_tmp = 0;
 }
+
+
+
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// BASE32 
+// 
+
+// TO
+
+const char pad = '=';
+
+const char *g_base32_alpha = "abcdefghijklmnopqrstuvwxyz234567";
+const char *g_base32_alpha_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+const char *g_hex32_alpha = "0123456789abcdefghijklmnopqrstuv";
+const char *g_hex32_alpha_UPPER = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
+
+// Takes string to be encoded as input
+// and its length and returns encoded string
+inline void convert_to_32_str(const unsigned char *input,size_t in_len,unsigned char *output,bool lower = true,bool hex = false) {
+    const unsigned char *tmp = input;
+    const unsigned char *end = tmp + in_len;
+    unsigned char *o_tmp = output;   // length checks done by parent caller
+    //
+    const char *alpha = g_base32_alpha;
+    if ( hex ) {
+        alpha = lower ? g_hex32_alpha : g_hex32_alpha_UPPER;
+    } else {
+        alpha = lower ? g_base32_alpha : g_base32_alpha_UPPER;
+    }
+    unsigned char zero_char = alpha[0];
+    //
+    bool pad = false ;
+    while ( tmp < end ) {
+        unsigned char c0 = *tmp++;
+        unsigned char c1 = ( tmp < end ) ? *tmp  : 0;
+        if ( tmp < end ) tmp++; else pad = true;
+        unsigned char c2 = ( tmp < end ) ? *tmp  : 0;
+        if ( tmp < end ) tmp++; else pad = true;
+        unsigned char c3 = ( tmp < end ) ? *tmp  : 0;
+        if ( tmp < end ) tmp++; else pad = true;
+        unsigned char c4 = ( tmp < end ) ? *tmp  : 0;
+        if ( tmp < end ) tmp++; else pad = true;
+        //
+        uint64_t buffer = ((uint64_t)c0 << 32) | ((uint64_t)c1 << 24) | ((uint64_t)c2 << 16) | ((uint64_t)c3 << 8) | c4;
+        //
+        unsigned char o7 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o6 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o5 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o4 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o3 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o2 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o1 = buffer & 0x01F; buffer >>= 5;
+        unsigned char o0 = buffer & 0x01F;
+        *o_tmp++ = alpha[o0];
+        *o_tmp++ = alpha[o1];
+        *o_tmp++ = alpha[o2];
+        *o_tmp++ = alpha[o3];
+        *o_tmp++ = alpha[o4];
+        *o_tmp++ = alpha[o5];
+        *o_tmp++ = alpha[o6];
+        *o_tmp++ = alpha[o7];
+    }
+    *o_tmp = 0;
+    if ( pad ) {
+        o_tmp--;
+        unsigned char c = *o_tmp;
+        while ( ( c == zero_char ) && ( o_tmp > output ) ) {
+            *o_tmp = ( c == zero_char ) ? pad : c;
+            o_tmp--; c = *o_tmp;
+        }
+    }
+}
+
+
+static inline unsigned char convert_single_char_32(unsigned char in,bool hex = false) {
+    const unsigned char digit_base = hex ? (unsigned char)('0') : (unsigned char)('2');
+    const unsigned char alph_base_lower = (unsigned char)('a');
+    const unsigned char alph_base_upper = (unsigned char)('A');
+    //
+    const unsigned char alpha_offset = hex ? 9 : 0;
+    const unsigned char digit_offset = hex ? 0 : 26;
+    //
+    unsigned char o_i = 0;
+    if ( in == '=' ) o_i = 0;
+    else if ( isdigit(in) ) { o_i = (in - digit_base) + digit_offset; }
+    else if ( islower(in) ) { o_i =  (in - alph_base_lower) + alpha_offset; }
+    else { o_i = (in - alph_base_upper) + alpha_offset; }
+    //
+    return o_i;
+}
+
+// FROM
+inline void convert_from_32_str(const unsigned char *input,size_t in_len,unsigned char *output,bool hex = false) {
+    const unsigned char *tmp = input;
+    const unsigned char *end = tmp + in_len;
+    unsigned char *o_tmp = output;   // length checks done by parent caller
+    while ( tmp < end ) {
+        unsigned char o0 = *tmp++;
+        unsigned char o1 = *tmp++;
+        unsigned char o2 = *tmp++;
+        unsigned char o3 = *tmp++;
+        unsigned char o4 = *tmp++;
+        unsigned char o5 = *tmp++;
+        unsigned char o6 = *tmp++;
+        unsigned char o7 = *tmp++;
+        //
+        uint64_t buffer = 0;
+        o0 = convert_single_char_32(o0);
+        o1 = convert_single_char_32(o1);
+        o2 = convert_single_char_32(o2);
+        o3 = convert_single_char_32(o3);
+        o4 = convert_single_char_32(o4);
+        o5 = convert_single_char_32(o5);
+        o6 = convert_single_char_32(o6);
+        o7 = convert_single_char_32(o7);
+        //
+        buffer = (o0 << 25) | (o1 << 20) | (o2 << 25) | (o3 << 20) | (o4 << 15) | (o5 << 10) | (o6 << 5) | o7;
+        // 
+        unsigned char c4 = buffer & 0xFF; buffer >>= 8;
+        unsigned char c3 = buffer & 0xFF; buffer >>= 8;
+        unsigned char c2 = buffer & 0xFF; buffer >>= 8;
+        unsigned char c1 = buffer & 0xFF; buffer >>= 8;
+        unsigned char c0 = buffer & 0xFF;
+        *o_tmp++ = c0;
+        *o_tmp++ = c1;
+        *o_tmp++ = c2;
+        *o_tmp++ = c3;
+        *o_tmp++ = c4;
+    }
+    *o_tmp = 0;
+}
+
+
+
+
+// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+// BASE36
+//   https://www.geeksforgeeks.org/convert-base-decimal-vice-versa/ 
+
+// TO
+const char *g_base36_alpha = "0123456789abcdefghijklmnopqrstuvwxyz";
+const char *g_base36_alpha_UPPER = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+typedef unsigned long long int base36_t;
+
+const uint8_t BASE36_LENGTH = 13;
+static base36_t base36_powers[BASE36_LENGTH] =
+  {
+    1ULL,
+    36ULL,
+    1296ULL,
+    46656ULL,
+    1679616ULL,
+    60466176ULL,
+    2176782336ULL,
+	78364164096ULL,
+	2821109907456ULL,
+	101559956668416ULL,
+	3656158440062976ULL,
+	131621703842267136ULL,
+	4738381338321616896ULL
+  };
+
 
 //
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
@@ -311,14 +530,15 @@ inline void convert_to_64_str(const unsigned char *input,size_t in_len,unsigned 
     const unsigned char *end = tmp + in_len;
     unsigned char *o_tmp = output;   // length checks done by parent caller
     const char *alpha = url_safe ? g_64_alphabet : g_64_alphabet_url;
+    unsigned char zero_char = alpha[0];
     //
     bool pad = false ;
     while ( tmp < end ) {
         unsigned char c0 = *tmp++;
-        unsigned char c1 = *tmp;
-        if ( *tmp ) tmp++; else pad = true;
-        unsigned char c2 = *tmp;
-        if ( *tmp ) tmp++; else pad = true;
+        unsigned char c1 = ( tmp < end ) ? *tmp : 0;
+        if ( tmp < end ) tmp++; else pad = true;
+        unsigned char c2 = ( tmp < end ) ? *tmp : 0;
+        if ( tmp < end ) tmp++; else pad = true;
         //
         unsigned int buffer = (c0 << 16) | (c1 << 8) | c2;
         //
@@ -335,8 +555,8 @@ inline void convert_to_64_str(const unsigned char *input,size_t in_len,unsigned 
     if ( pad ) {
         o_tmp--;
         unsigned char c = *o_tmp;
-        while ( ( c == 'A' ) && ( o_tmp > output ) ) {
-            *o_tmp = ( c == 'A' ) ? '=' : c;
+        while ( ( c == zero_char ) && ( o_tmp > output ) ) {
+            *o_tmp = ( c == zero_char ) ? '=' : c;
             o_tmp--; c = *o_tmp;
         }
     }
