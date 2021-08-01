@@ -19,10 +19,18 @@ string
 -
 string.h
 -
-src/conversions.hpp
-/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/conversions.hpp
+include/SHA256.h
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/SHA256.h
+include/conversions.hpp
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/conversions.hpp
 
-/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/conversions.hpp
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/SHA256.h
+string
+-
+array
+-
+
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/conversions.hpp
 cmath
 -
 list
@@ -34,5 +42,15 @@ iostream
 string
 -
 string.h
+-
+
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/SHA256.cpp
+../include/SHA256.h
+/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/SHA256.h
+cstring
+-
+sstream
+-
+iomanip
 -
 

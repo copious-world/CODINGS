@@ -3,4 +3,8 @@
 
 CMakeFiles/CODINGS.dir/app_main.cpp.o
  /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/app_main.cpp
- /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/conversions.hpp
+ /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/SHA256.h
+ /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/conversions.hpp
+CMakeFiles/CODINGS.dir/src/SHA256.cpp.o
+ /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/include/SHA256.h
+ /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/src/SHA256.cpp

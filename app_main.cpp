@@ -9,8 +9,8 @@
 
 using namespace std;
 
-
-#include "src/conversions.hpp"
+#include "include/SHA256.h"
+#include "include/conversions.hpp"
 
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
@@ -92,6 +92,45 @@ int main(int arc, char **argv) {
 
     //
     cout << "DONE" << endl;
+
+  
+    
+    uint32_t b1 = 0;
+    
+    while ( b1 == 0 ) {
+        cout << "num: " << endl;
+        cin >> b1;
+        if ( b1 == 0 ) break;
+        uint8_t b = -1;
+        while ( b1 ) {
+            b1 >>= 1;
+            b++;
+        }
+
+        cout << (int)b << endl;
+
+    }
+
+    uint8_t n_examp = 4;
+
+    const char *examples[] = {
+        "hello world",
+        "have a nice day",
+        "you are here",
+        "it could be better"
+    };
+
+    for(int i = 0 ; i < n_examp ; i++) {
+		SHA256 sha;
+		sha.update(examples[i]);
+		uint8_t * digest = sha.digest();
+
+		std::cout << SHA256::toString(digest) << std::endl;
+
+		delete[] digest;
+	}
+
+
 
     return 0;
 }

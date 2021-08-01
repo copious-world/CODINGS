@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/CODINGS.dir/app_main.cpp.o"
+  "CMakeFiles/CODINGS.dir/src/SHA256.cpp.o"
   "CODINGS.pdb"
   "CODINGS"
 )

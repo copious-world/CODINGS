@@ -1,1 +1,1 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/CODINGS.dir/app_main.cpp.o  -o CODINGS 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/CODINGS.dir/app_main.cpp.o CMakeFiles/CODINGS.dir/src/SHA256.cpp.o  -o CODINGS -lcrypto 

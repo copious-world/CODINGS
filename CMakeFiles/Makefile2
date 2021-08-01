@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS
 CMakeFiles/CODINGS.dir/all:
 	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/depend
 	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/CMakeFiles --progress-num=1,2 "Built target CODINGS"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/CMakeFiles --progress-num=1,2,3 "Built target CODINGS"
 .PHONY : CMakeFiles/CODINGS.dir/all
 
 # Include target in all.
@@ -76,7 +76,7 @@ all: CMakeFiles/CODINGS.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CODINGS.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CODINGS.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/richardalbertleddy/Documents/GitHub/ML/CODINGS/CMakeFiles 0
 .PHONY : CMakeFiles/CODINGS.dir/rule

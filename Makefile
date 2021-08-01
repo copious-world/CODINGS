@@ -150,6 +150,33 @@ app_main.cpp.s:
 	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/app_main.cpp.s
 .PHONY : app_main.cpp.s
 
+src/SHA256.o: src/SHA256.cpp.o
+
+.PHONY : src/SHA256.o
+
+# target to build an object file
+src/SHA256.cpp.o:
+	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/src/SHA256.cpp.o
+.PHONY : src/SHA256.cpp.o
+
+src/SHA256.i: src/SHA256.cpp.i
+
+.PHONY : src/SHA256.i
+
+# target to preprocess a source file
+src/SHA256.cpp.i:
+	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/src/SHA256.cpp.i
+.PHONY : src/SHA256.cpp.i
+
+src/SHA256.s: src/SHA256.cpp.s
+
+.PHONY : src/SHA256.s
+
+# target to generate assembly for a file
+src/SHA256.cpp.s:
+	$(MAKE) -f CMakeFiles/CODINGS.dir/build.make CMakeFiles/CODINGS.dir/src/SHA256.cpp.s
+.PHONY : src/SHA256.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,6 +189,9 @@ help:
 	@echo "... app_main.o"
 	@echo "... app_main.i"
 	@echo "... app_main.s"
+	@echo "... src/SHA256.o"
+	@echo "... src/SHA256.i"
+	@echo "... src/SHA256.s"
 .PHONY : help
 
 
