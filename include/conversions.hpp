@@ -515,7 +515,7 @@ inline bool convert_from_58_str(const unsigned char *input,size_t in_len,unsigne
 
 
 // ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
-// 64 
+// base64 
 // 64 STRING REPRESENTATION
 
 // TO
